@@ -16,6 +16,12 @@ class Ym23FlutterPluginBiometric {
   }
 
   ///
+  /// 是否停止继续后续操作
+  /// return [true|false]
+  ///
+  static Future<bool> shouldGoBack() async => false;
+
+  ///
   /// 启动测试
   ///
   static Future<Void> ym23FingerAndFace() {
