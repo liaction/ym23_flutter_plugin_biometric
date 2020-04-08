@@ -19,7 +19,7 @@ class Ym23FlutterPluginBiometric {
   /// 是否停止继续后续操作
   /// return [true|false]
   ///
-  static Future<bool> shouldGoBack() async => false;
+  static bool shouldGoBack() => false;
 
   ///
   /// 启动测试
