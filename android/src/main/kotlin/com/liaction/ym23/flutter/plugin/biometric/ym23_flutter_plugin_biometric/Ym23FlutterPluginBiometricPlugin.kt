@@ -166,12 +166,20 @@ public class Ym23FlutterPluginBiometricPlugin : FlutterPlugin, MethodCallHandler
             // 面部管理
             "ym23LocalFaceManager" -> {
                 // 获取面部列表
+                if (!FaceServer.getInstance().init(mRegistrar.context())) {
+                    result23.success(mapOf(
+                            "code" to -1,
+                            "message" to "引擎初始化失败"
+                    ))
+                    return
+                }
                 val faceInfoList = FaceServer.getInstance().faceList
                 val resultMap = mutableMapOf<String, Any>()
                 resultMap["facePath"] = FaceServer.ROOT_PATH + File.separator + FaceServer.SAVE_IMG_DIR
                 resultMap["faceSuffix"] = FaceServer.IMG_SUFFIX
-                resultMap["faceList"] = faceInfoList.map { it.name }.toList()
+                resultMap["faceList"] = if (!faceInfoList.isNullOrEmpty()) faceInfoList.map { it.name }.toList() else arrayListOf()
                 resultMap["code"] = 23
+                FaceServer.getInstance().unInit()
                 result23.success(resultMap)
             }
             else -> {
