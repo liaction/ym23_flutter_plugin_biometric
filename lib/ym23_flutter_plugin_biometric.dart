@@ -50,6 +50,10 @@ class Ym23FlutterPluginBiometric {
     return _channel.invokeMethod("ym23CheckSupportFingerOrFace");
   }
 
+  static Future<Map> ym23LocalFaceManager() {
+    return _channel.invokeMethod("ym23LocalFaceManager");
+  }
+
   ///
   /// 人脸识别验证注册
   ///

@@ -17,6 +17,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
+import java.io.File
 
 /** Ym23FlutterPluginBiometricPlugin */
 public class Ym23FlutterPluginBiometricPlugin : FlutterPlugin, MethodCallHandler {
@@ -161,6 +162,17 @@ public class Ym23FlutterPluginBiometricPlugin : FlutterPlugin, MethodCallHandler
                     putExtra("user", userName)
                     putExtra("name", if (register) "人脸注册" else "人脸验证")
                 }, if (register) REQUEST_FACE_REGISTER else REQUEST_FACE_VALID)
+            }
+            // 面部管理
+            "ym23LocalFaceManager" -> {
+                // 获取面部列表
+                val faceInfoList = FaceServer.getInstance().faceList
+                val resultMap = mutableMapOf<String, Any>()
+                resultMap["facePath"] = FaceServer.ROOT_PATH + File.separator + FaceServer.SAVE_IMG_DIR
+                resultMap["faceSuffix"] = FaceServer.IMG_SUFFIX
+                resultMap["faceList"] = faceInfoList.map { it.name }.toList()
+                resultMap["code"] = 23
+                result23.success(resultMap)
             }
             else -> {
                 result23.notImplemented()
